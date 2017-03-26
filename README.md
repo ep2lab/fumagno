@@ -20,7 +20,7 @@ remaining arrays
 for the potential, velocities and densities in the inital plane.
 4. Use flow_solver to compute the solution of the plasma properties
 
-![Example workflow diagram](/docs/figs/fumagno-workflow.svg "FUMAGNO example workflow")
+![Example workflow diagram](/docs/figs/fumagno-workflow.png "FUMAGNO example workflow")
 
 See the tests in tests/fumagno_test.m for examples of calls to these functions.
 
