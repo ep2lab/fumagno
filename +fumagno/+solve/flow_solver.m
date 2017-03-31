@@ -55,8 +55,8 @@ p.addParameter('Y0',0,@isnumeric);
 p.addParameter('B0',1,@isnumeric);
 
 p.addParameter('phi0',@(x0,y0)0,@(x)isa(x,'function_handle'));
-p.addParameter('ni0',@default_n,@iscell);
-p.addParameter('ui0',@default_u,@iscell);
+p.addParameter('ni0',@default_n,@(x)isa(x,'function_handle'));
+p.addParameter('ui0',@default_u,@(x)isa(x,'function_handle'));
     default_ncell(1:n_electrons) = {@default_n};
 p.addParameter('ne0',default_ncell,@iscell);
     default_ucell(1:n_electrons) = {@default_u};
@@ -78,17 +78,13 @@ for i_electrons = 1:n_electrons
     O.GE{i_electrons} = fumagno.equations.Geq(I.ue0{i_electrons}(I.X0,I.Y0),I.ne0{i_electrons}(I.X0,I.Y0),I.B0);
 end
  
-%% Prepare interpolation libraries for guess (adequate guess for near-sonic cold ions + isothermal electrons)
-q = I.plasma.ions.q; 
-T0 = 0; % lumped temperature of all electron species
-for i_electrons = 1:n_electrons 
-    T0 = T0 + I.plasma.electrons{i_electrons}.T(I.ne0{i_electrons}(0,0)); 
-end 
-T0 = max(1,T0);
-M0 = max(1,I.ui0(0,0))/I.plasma.cs(max(1,I.ni0(0,0))); % estimate of Mach number
-uratio = linspace(1,20,10000); % velocity ratio interpolation library. !!! May need to change the limits
-Bratio = uratio.*exp(-0.5*M0^2*(uratio.^2-1)); % magnetic field ratio interpolation library 
-phidiff = T0*log(Bratio./uratio)/q; % potential difference interpolation library
+%% Prepare interpolation libraries for guess (adequate guess for initially sonic cold ions + single electron species)
+e1 = I.plasma.electrons{1}; 
+k1 = e1.thermo_model_data; 
+nratiolib = linspace(0,1,10000);
+utilderatiolib = sqrt(1 - 2/(k1.gamma*k1.T0) *(e1.h(nratiolib*k1.n0)-e1.h(k1.n0)));
+Bratiolib = nratiolib.*utilderatiolib; Bratiolib(1) = 0;
+phidifflib = (e1.h(nratiolib*k1.n0)-e1.h(k1.n0))/k1.T0; % potential difference interpolation library
 
 %% Solve for U, N, PHI
 O.PHI = I.B.*0; % Allocate
@@ -99,7 +95,7 @@ for i_electrons = 1:n_electrons
     O.UE{i_electrons} = I.B.*0;
 end
 for j = 1:numel(I.B) % for each point
-    if O.HI(j) == 0 % current streamline is empty, we are outside of MN
+    if O.HI(j) == 0 % current streamline is empty, we are outside of MN: return NaNs
         O.NI(j) = NaN;
         O.UI(j) = NaN;
         O.PHI(j) = NaN;
@@ -107,39 +103,37 @@ for j = 1:numel(I.B) % for each point
             O.NE{i_electrons}(j) = NaN;
             O.UE{i_electrons}(j) = NaN;
         end
-        continue;
-    end
-    if I.B(j) == I.B0(j) % We are at the initial plane so return initial values
-        O.NI(j) = I.ui0(I.X0(j),I.Y0(j));
+    elseif I.B(j) == I.B0(j) % We are at the initial plane: return the initial values
+        O.NI(j) = I.ni0(I.X0(j),I.Y0(j));
         O.UI(j) = I.ui0(I.X0(j),I.Y0(j));
-        O.PHI(j) = I.ui0(I.X0(j),I.Y0(j));
+        O.PHI(j) = I.phi0(I.X0(j),I.Y0(j));
         for i_electrons = 1:n_electrons
             O.NE{i_electrons}(j) = I.ne0{i_electrons}(I.X0(j),I.Y0(j));
             O.UE{i_electrons}(j) = I.ue0{i_electrons}(I.X0(j),I.Y0(j));
         end
-        continue;
-    end        
-    % Prepare a sensible initial guess for the supersonic branch
-    ui = I.ui0(I.X0(j),I.Y0(j))*interp1(Bratio,uratio,I.B(j)/I.B0(j));
-    phi = I.phi0(I.X0(j),I.Y0(j)) + interp1(Bratio,phidiff,I.B(j)/I.B0(j)); 
-    ue = cell(1,n_electrons);
-    for i_electrons = 1:n_electrons
-        ue{i_electrons} = I.ue0{i_electrons}(I.X0(j),I.Y0(j))*interp1(Bratio,uratio,I.B(j)/I.B0(j));        
-    end         
-    % Put H and G in a form that can be used to call equationsystem
-    for i_electrons = 1:n_electrons
-        Hetemp{i_electrons} = O.HE{i_electrons}(j);
-        Getemp{i_electrons} = O.GE{i_electrons}(j);
+    else % Rest of cases: 
+        % Prepare a sensible initial guess for the supersonic branch
+        ui = I.ui0(I.X0(j),I.Y0(j))*interp1(Bratiolib,utilderatiolib,I.B(j)/I.B0(j));
+        phi = I.phi0(I.X0(j),I.Y0(j)) + k1.T0*interp1(Bratiolib,phidifflib,I.B(j)/I.B0(j))/abs(e1.q); 
+        ue = cell(1,n_electrons);
+        for i_electrons = 1:n_electrons
+            ue{i_electrons} = ui;
+        end         
+        % Put H and G in a form that can be used to call equationsystem
+        for i_electrons = 1:n_electrons
+            Hetemp{i_electrons} = O.HE{i_electrons}(j);
+            Getemp{i_electrons} = O.GE{i_electrons}(j);
+        end
+        % Solve quasineutrality equation to determine phi, then the rest
+        O.PHI(j) = fzero(@(phi)quasineutrality(phi,ui,ue,I.plasma,I.B(j),O.HI(j),O.GI(j),Hetemp,Getemp),phi); % fzero is shamefully slow and unflexible. ??? consider doing my own solver
+        O.UI(j) = fzero(@(x)O.HI(j)-fumagno.equations.Heq(I.plasma.ions,x,O.GI(j)*I.B(j)/x,O.PHI(j)),ui);
+        O.NI(j) = O.GI(j)*I.B(j)/O.UI(j);
+        for i_electrons = 1:n_electrons
+            O.UE{i_electrons}(j) = fzero(@(x)Hetemp{i_electrons} - ...
+                fumagno.equations.Heq(I.plasma.electrons{i_electrons},x,Getemp{i_electrons}*I.B(j)/x,O.PHI(j)),ue{i_electrons});
+            O.NE{i_electrons}(j) = Getemp{i_electrons}*I.B(j)/O.UE{i_electrons}(j);
+        end 
     end
-    % Solve quasineutrality equation to determine phi, then the rest
-    O.PHI(j) = fzero(@(phi)quasineutrality(phi,ui,ue,I.plasma,I.B(j),O.HI(j),O.GI(j),Hetemp,Getemp),phi); % fzero is shamefully slow and unflexible. ??? consider doing my own solver
-    O.UI(j) = fzero(@(x)O.HI(j)-fumagno.equations.Heq(I.plasma.ions,x,O.GI(j)*I.B(j)/x,O.PHI(j)),ui);
-    O.NI(j) = O.GI(j)*I.B(j)/O.UI(j);
-    for i_electrons = 1:n_electrons
-        O.UE{i_electrons}(j) = fzero(@(x)Hetemp{i_electrons} - ...
-            fumagno.equations.Heq(I.plasma.electrons{i_electrons},x,Getemp{i_electrons}*I.B(j)/x,O.PHI(j)),ue{i_electrons});
-        O.NE{i_electrons}(j) = Getemp{i_electrons}*I.B(j)/O.UE{i_electrons}(j);
-    end 
 end 
 
 end % end main function

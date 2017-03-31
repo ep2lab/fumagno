@@ -34,12 +34,12 @@ function [O,I] = x0y0_inverse(varargin)
 %% Parse input
 p = inputParser;
 p.addParameter('field',magnetic_field.loop_3d,@(x)isa(x,'magnetic_field.element_3d'));
-p.addParameter('direction',-1,@isnumeric);
-p.addParameter('maxlength',1e6,@isnumeric);
-p.addParameter('odeoptions',odeset,@isstruct);
 p.addParameter('X',0,@isnumeric);
 p.addParameter('Y',0,@isnumeric);
 p.addParameter('Z',1,@isnumeric);
+p.addParameter('direction',-1,@isnumeric);
+p.addParameter('maxlength',1e6,@isnumeric);
+p.addParameter('odeoptions',odeset,@isstruct);
 
 % Validate and parse input
 p.parse(varargin{:}); % check all, and assign defaults to p.Results as needed.

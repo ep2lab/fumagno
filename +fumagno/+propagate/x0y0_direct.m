@@ -33,11 +33,12 @@ function [O,I] = x0y0_direct(varargin)
 %% Parse input
 p = inputParser;
 p.addParameter('field',magnetic_field.loop_3d,@(x)isa(x,'magnetic_field.element_3d'));
+p.addParameter('X0',0,@isnumeric);
+p.addParameter('Y0',0,@isnumeric);
 p.addParameter('ds',0.05,@isnumeric);
 p.addParameter('n_steps',100,@isnumeric);
 p.addParameter('odeoptions',odeset,@isstruct);
-p.addParameter('X0',0,@isnumeric);
-p.addParameter('Y0',0,@isnumeric);
+
 
 % Validate and parse input
 p.parse(varargin{:}); % check all, and assign defaults to p.Results as needed.
@@ -53,21 +54,21 @@ clear p
  
 %% Compute trivial output components
 O.X0 = O.X; % Allocate
-O.Y0 = O.Y; 
+O.Y0 = O.X; 
 O.BX0 = O.X;
-O.BY0 = O.Y;
+O.BY0 = O.X;
 O.BZ0 = O.X;
-O.B0 = O.Y;
+O.B0 = O.X;
 [BX0,BY0,BZ0] = I.field.field_3d(I.X0,I.Y0,I.X0.*0); % temporary values
 B0 = sqrt(BX0.^2+BY0.^2+BZ0.^2);
-n_ini_points = numel(I.X0);
+n_X0 = numel(I.X0);
 for i =0:I.n_steps-1
-    O.X0(1+n_ini_points*i:n_ini_points*(i+1)) = I.X0; 
-    O.Y0(1+n_ini_points*i:n_ini_points*(i+1)) = I.Y0;
-    O.BX0(1+n_ini_points*i:n_ini_points*(i+1)) = BX0; 
-    O.BY0(1+n_ini_points*i:n_ini_points*(i+1)) = BY0;
-    O.BZ0(1+n_ini_points*i:n_ini_points*(i+1)) = BZ0; 
-    O.B0(1+n_ini_points*i:n_ini_points*(i+1)) = B0;
+    O.X0(1+n_X0*i:n_X0*(i+1)) = I.X0; 
+    O.Y0(1+n_X0*i:n_X0*(i+1)) = I.Y0;
+    O.BX0(1+n_X0*i:n_X0*(i+1)) = BX0; 
+    O.BY0(1+n_X0*i:n_X0*(i+1)) = BY0;
+    O.BZ0(1+n_X0*i:n_X0*(i+1)) = BZ0; 
+    O.B0(1+n_X0*i:n_X0*(i+1)) = B0;
 end 
 
 %% Compute BX, BY, BZ, B at X,Y,Z

@@ -42,6 +42,18 @@ function test_x0y0_inverse(t)
     [O,I] = fumagno.propagate.x0y0_inverse('field',field,'x',[0.1;0.15],'y',[0.2;0.22],'z',[0.9;0.99]); % vector call
     [O,I] = fumagno.propagate.x0y0_inverse('field',field,'x',rand(3,4),'y',rand(3,4),'z',rand(3,4)+2,'odeoptions',odeoptions); % array call
 end 
+
+function test_x0y0_to_plane(t)    
+    % set up required fixture data
+    field = magnetic_field.loop_3d('axis',[0,0,1]);
+    odeoptions = odeset;
+    odeoptions.AbsTol = 1e-8;
+    
+    [O,I] = fumagno.propagate.x0y0_to_plane; % default call
+    [O,I] = fumagno.propagate.x0y0_to_plane('field',field,'x0',0.1,'y0',0.2); % scalar call
+    [O,I] = fumagno.propagate.x0y0_to_plane('field',field,'x0',[0.1;0.15],'y0',[0.2;0.22],'z_planes',linspace(0,3,20)); % vector call
+    [O,I] = fumagno.propagate.x0y0_to_plane('field',field,'x0',rand(3,4),'y0',rand(3,4),'z',rand(3,4)+2,'z_planes',[6,7],'odeoptions',odeoptions); % array call
+end 
  
 function test_flow_solver(t)    
     % set up required fixture data

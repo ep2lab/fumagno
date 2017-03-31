@@ -1,7 +1,7 @@
 FUMAGNO
 =======
 
-Matlab code that implements the fully magnetized magnetic nozzle model
+Matlab code that implements the 3D fully magnetized magnetic nozzle model
 presented in meri16a -- Fully magnetized plasma flow in a magnetic nozzle.
 
 Workflow examples
@@ -32,6 +32,11 @@ For FUMAGNO to work, the matlab packages
 and
 [fluid_plasma](https://github.com/mariomerinomartinez/fluid_plasma),
 must be in the user's path.
+
+To do
+-----
+
+* 20170326: Create a better solver to replace matlab fzero (slow and unflexible)
 
 Updates
 -----
