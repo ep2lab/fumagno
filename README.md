@@ -1,6 +1,8 @@
 FUMAGNO
 =======
 
+[![DOI](https://zenodo.org/badge/86265405.svg)](https://zenodo.org/badge/latestdoi/86265405)
+
 Matlab code that implements a 3D fully magnetized magnetic nozzle model.
 You can find all the details of the model in [TBD].
 
