@@ -49,9 +49,8 @@ See the tests in `tests/fumagno_test.m` for examples of calls to these functions
 
 If you have any comments for improvement or 
 are interested in contributing to the continued 
-development of FUMAGNO or any of my other codes, you can contact me at
-<mario.merino@uc3m.es> and through my 
-[personal website](http://mariomerino.uc3m.es/).
+development of FUMAGNO or any of my other codes, you can contact me 
+through my [personal website](http://mariomerino.uc3m.es/).
 
 ## Acknowledging 
 
