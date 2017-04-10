@@ -58,11 +58,9 @@ This program is released as open source in the hope that it will be useful to
 other people. 
 
 If you find FUMAGNO useful and/or use it in any of your works, I kindly ask you
-to acknowledge it by citing
+to acknowledge it by citing [TBD].
 
 ## License
 
-Copyright (c) 2017 Mario Merino.
-
-The software is released as open source with the [MIT License](LICENSE.md)
+Copyright (c) 2017 Mario Merino. The software is released as open source with the [MIT License](LICENSE.md).
 
