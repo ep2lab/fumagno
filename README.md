@@ -6,9 +6,10 @@ You can find all the details of the model in [TBD].
 
 ## Installation
 
-Installation requires simply that you download FUMAGNO and add the base 
-directory (the one that contains the `+fumagno` directory) to your 
-Matlab path.
+Installation requires simply that you 
+[download FUMAGNO](https://github.com/mariomerinomartinez/fumagno/archive/master.zip) 
+and add the base directory (the one that contains the `+fumagno` directory) to 
+your Matlab path.
 
 ### Dependencies
 
