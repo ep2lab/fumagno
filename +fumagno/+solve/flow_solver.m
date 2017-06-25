@@ -79,12 +79,11 @@ for i_electrons = 1:n_electrons
 end
  
 %% Prepare interpolation libraries for guess (adequate guess for initially sonic cold ions + single electron species)
-e1 = I.plasma.electrons{1}; 
-k1 = e1.thermo_model_data; 
+e1 = I.plasma.electrons{1};  
 nratiolib = linspace(0,1,10000);
-utilderatiolib = sqrt(1 - 2/(k1.gamma*k1.T0) *(e1.h(nratiolib*k1.n0)-e1.h(k1.n0)));
+utilderatiolib = sqrt(1 - 2/(e1.gamma*e1.T0) *(e1.h(nratiolib*e1.n0)-e1.h(e1.n0)));
 Bratiolib = nratiolib.*utilderatiolib; Bratiolib(1) = 0;
-phidifflib = (e1.h(nratiolib*k1.n0)-e1.h(k1.n0))/k1.T0; % potential difference interpolation library
+phidifflib = (e1.h(nratiolib*e1.n0)-e1.h(e1.n0))/e1.T0; % potential difference interpolation library
 
 %% Solve for U, N, PHI
 O.PHI = I.B.*0; % Allocate
@@ -114,7 +113,7 @@ for j = 1:numel(I.B) % for each point
     else % Rest of cases: 
         % Prepare a sensible initial guess for the supersonic branch
         ui = I.ui0(I.X0(j),I.Y0(j))*interp1(Bratiolib,utilderatiolib,I.B(j)/I.B0(j));
-        phi = I.phi0(I.X0(j),I.Y0(j)) + k1.T0*interp1(Bratiolib,phidifflib,I.B(j)/I.B0(j))/abs(e1.q); 
+        phi = I.phi0(I.X0(j),I.Y0(j)) + e1.T0*interp1(Bratiolib,phidifflib,I.B(j)/I.B0(j))/abs(e1.q); 
         ue = cell(1,n_electrons);
         for i_electrons = 1:n_electrons
             ue{i_electrons} = ui;
