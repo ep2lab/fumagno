@@ -28,6 +28,11 @@ and
 These packages must be installed and added to your Matlab path before
 running FUMAGNO.
 
+**Important comment**: I frequently update these repositories and some of the
+FUMAGNO dependencies in those packages may break. If you detect any such
+problem, please contact me through my 
+[personal website](http://mariomerino.uc3m.es/).
+
 ## Usage
 
 The basic workflow with FUMAGNO is as follows:
@@ -61,8 +66,14 @@ This program is released as open source in the hope that it will be useful to
 other people. 
 
 If you find FUMAGNO useful and/or use it in any of your works, I kindly ask you
-to acknowledge it by citing [TBD] (preferred) 
-and/or by citing the code directly as
+to acknowledge it by citing the following article (preferred):
+
+> **Mario Merino and Eduardo Ahedo**, 
+"_Contactless steering of a plasma jet with a 3D magnetic nozzle_", 
+Plasma Sources Science and Technology 26, 095001 (2017) 
+[DOI](http://iopscience.iop.org/article/10.1088/1361-6595/aa8061)
+
+and/or by citing the code directly as:
 
 > Mario Merino (2017). mariomerinomartinez/fumagno: First release DOI:10.5281/zenodo.496128
 
