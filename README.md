@@ -75,7 +75,7 @@ Plasma Sources Science and Technology 26, 095001 (2017)
 
 and/or by citing the code directly as:
 
-> Mario Merino (2017). mariomerinomartinez/fumagno: First release DOI:10.5281/zenodo.496128
+> Mario Merino (2017). mariomerinomartinez/fumagno: First release DOI:10.5281/zenodo.593787
 
 ## License
 
