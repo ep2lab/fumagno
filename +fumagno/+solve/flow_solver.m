@@ -56,10 +56,10 @@ p.addParameter('B0',1,@isnumeric);
 
 p.addParameter('phi0',@(x0,y0)0,@(x)isa(x,'function_handle'));
 p.addParameter('ni0',@default_n,@(x)isa(x,'function_handle'));
-p.addParameter('ui0',@default_u,@(x)isa(x,'function_handle'));
+p.addParameter('ui0',@default_ui,@(x)isa(x,'function_handle'));
     default_ncell(1:n_electrons) = {@default_n};
 p.addParameter('ne0',default_ncell,@iscell);
-    default_ucell(1:n_electrons) = {@default_u};
+    default_ucell(1:n_electrons) = {@default_ui};
 p.addParameter('ue0',default_ucell,@iscell);
 
 p.parse(varargin{:}); % check all, and assign defaults to p.Results as needed.
@@ -94,7 +94,7 @@ for i_electrons = 1:n_electrons
     O.UE{i_electrons} = I.B.*0;
 end
 for j = 1:numel(I.B) % for each point
-    if O.HI(j) == 0 % current streamline is empty, we are outside of MN: return NaNs
+    if O.HI(j) == 0 || isnan(O.HI(j)) % current streamline is empty, we are outside of MN: return NaNs
         O.NI(j) = NaN;
         O.UI(j) = NaN;
         O.PHI(j) = NaN;
@@ -147,11 +147,11 @@ function n = default_n(x0,y0)
     n = exp(-(x0.^2+y0.^2)*3*log(10));
     n(x0.^2+y0.^2>1)=0;
 end
-function u = default_u(x0,y0)
-% Default plasma density in case no input is provided. Use 
-% u = 1 in the circle with R = 1
-    u = x0.*0;
-    u(x0.^2+y0.^2<=1) = 1;
+function u = default_ui(x0,y0)
+% Default velocity in case no input is provided. Use u = 1 in the circle with 
+% R = 1
+    u = x0.*0 + 1;
+    u(x0.^2+y0.^2>1) = 0;
 end 
 function err = quasineutrality(phi,ui,ue,plasma,B,Hi,Gi,He,Ge)
 % Error equation used to solve for phi

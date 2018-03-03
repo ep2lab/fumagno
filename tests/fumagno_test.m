@@ -58,7 +58,8 @@ end
 function test_flow_solver(t)    
     % set up required fixture data
     field = magnetic_field.loop_3d('axis',[0,0,1]);
-    plasma = fluid_plasma.plasma;
+    plasma = fluid_plasma.plasma; 
+    
     odeoptions = odeset;
     odeoptions.AbsTol = 1e-8;
     [O,I] = fumagno.propagate.x0y0_inverse('field',field,'x',rand(3,4),'y',rand(3,4),'z',rand(3,4)+2,'odeoptions',odeoptions); % array call
