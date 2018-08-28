@@ -9,7 +9,7 @@ You can find all the details of the model in [TBD].
 ## Installation
 
 Installation requires simply that you 
-[download FUMAGNO](https://github.com/mariomerinomartinez/fumagno/archive/master.zip) 
+[download FUMAGNO](https://github.com/ep2lab/fumagno/archive/master.zip) 
 and add the base directory (the one that contains the `+fumagno` directory) to 
 your Matlab path.
 
@@ -20,18 +20,18 @@ FUMAGNO has been developed in Matlab 2016a Academic version.
 
 FUMAGNO depends on other Matlab packages that you can download from my GitHub
 account:
-[magnetic_field](https://github.com/mariomerinomartinez/magnetic_field),
-[fluid_plasma](https://github.com/mariomerinomartinez/fluid_plasma),
-[utilities](https://github.com/mariomerinomartinez/utilities)
+[magnetic_field](https://github.com/ep2lab/magnetic_field),
+[fluid_plasma](https://github.com/ep2lab/fluid_plasma),
+[utilities](https://github.com/ep2lab/utilities)
 and
-[constants_and_units](https://github.com/mariomerinomartinez/constants_and_units).
+[constants_and_units](https://github.com/ep2lab/constants_and_units).
 These packages must be installed and added to your Matlab path before
 running FUMAGNO.
 
 **Important comment**: I frequently update these repositories and some of the
 FUMAGNO dependencies in those packages may break. If you detect any such
-problem, please contact me through my 
-[personal website](http://mariomerino.uc3m.es/).
+problem, please contact me through our 
+[website](http://ep2lab.uc3m.es/).
 
 ## Usage
 
@@ -57,15 +57,15 @@ See the tests in `tests/fumagno_test.m` for examples of calls to these functions
 
 If you have any comments for improvement or 
 are interested in contributing to the continued 
-development of FUMAGNO or any of my other codes, you can contact me 
-through my [personal website](http://mariomerino.uc3m.es/).
+development of this or any of my other codes, you can contact us
+through our [website](http://ep2.uc3m.es/). 
+
+For updates and news, follow us on Twitter: [@ep2lab.](https://twitter.com/ep2lab).
 
 ## Acknowledging 
 
 This program is released as open source in the hope that it will be useful to
-other people. 
-
-If you find FUMAGNO useful and/or use it in any of your works, I kindly ask you
+other people. If you find FUMAGNO useful and/or use it in any of your works, we kindly ask you
 to acknowledge it by citing the following article (preferred):
 
 > **Mario Merino and Eduardo Ahedo**, 
@@ -79,5 +79,5 @@ and/or by citing the code directly as:
 
 ## License
 
-Copyright (c) 2017 Mario Merino. The software is released as open source with the [MIT License](LICENSE.md).
+Copyright (c) 2017 Mario Merino and Eduardo Ahedo. The software is released as open source with the [MIT License](LICENSE.md).
 
