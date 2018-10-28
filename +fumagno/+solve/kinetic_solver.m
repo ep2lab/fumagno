@@ -35,7 +35,7 @@ Judit Nuez
 Date: 20181020
 %----------------------------------------------------------------------
 %}
-function  [Kinetic_solution]  =kinetic_solver (userdata, varargin)
+function  [Kinetic_solution]  =kinetic_solver (userdata, path, varargin)
  
 %% Parse input
 p = inputParser; 
