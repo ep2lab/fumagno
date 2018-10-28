@@ -59,7 +59,7 @@ for the potential, velocities and densities in the inital plane.
 5. Use the output as you see fit (save, plot, etc)
 
 
-![Example workflow diagram](/docs/figs/fumagno-workflow.png "FUMAGNO example workflow")
+![Example workflow diagram](/docs/figs/ifumagno-workflow.png "I-FUMAGNO example workflow")
 
 See the tests in `tests/fumagno_test.m` for examples of calls to these functions.
 
