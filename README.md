@@ -53,8 +53,8 @@ at the initial plane of the magnetic lines of interest. The function `x0y0_direc
 3. Create the a `fluid_plasma` object and the initial condition functions
 for the potential, velocities and densities in the inital plane.
 4. Use `flow_solver` to compute the solution of the plasma properties.
-   * A function `library` that computes the solution for a random vector of plasma densities 
-   * A function `interpolation` that finds the solution for each magnetic line by interpolation 
+   * A function `fluid_library` that computes  the solution for a random vector of plasma densities 
+   * A function `fluid_interp` that finds the solution for each magnetic line by interpolation 
    * The solution is postprocessed in order to impose the conditions at the throat 
 5. Use the output as you see fit (save, plot, etc)
 
@@ -72,13 +72,11 @@ to be studied. The object must be of a subclass of `magnetic_field.element_3d`
 2. Create the arrays with the points where the plasma properties will be
 calculated. This can be done  by generating `X0,Y0`, the points
 at the initial plane of the magnetic lines of interest. The function `x0y0_direct`is used to compute the remaining arrays.
-3. Create the a `fluid_plasma` object and the initial condition functions
-for the potential, velocities and densities in the inital plane.
-4. Use `flow_solver` to compute the solution of the plasma properties under isotropic assumptions
-5. Create an interpolation library solving `akiles` for a random vector of magnetic tube radius 
-6. Interpolate for each magnetic line, using the interpolation library in step 5
+4. Use `kinetic_solver` to compute the solution of the plasma properties under isotropic assumptions
+  * A function `kinetic_library` that computes [akiles](https://github.com/ep2lab/akiles) for a random vector of magnetic tube radius
+  * A function `kinetic_interp` that finds the solution for each magnetic line by interpolation.  
+  * The solution is postprocessed in order to impose the conditions at the throat.
 5. Use the output as you see fit (save, plot, etc)
-
 
 ![Example workflow diagram 2](/docs/figs/kfumagno-workflow.png "K-FUMAGNO example workflow")
 
