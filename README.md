@@ -57,7 +57,8 @@ for the potential, velocities and densities in the inital plane.
    * A function `interpolation` that finds the solution for each magnetic line by interpolation 
    * The solution is postprocessed in order to impose the conditions at the throat 
 5. Use the output as you see fit (save, plot, etc)
-![Example](file:///C:/Users/jnued/Desktop/op4.svg)
+
+
 ![Example workflow diagram](/docs/figs/fumagno-workflow.png "FUMAGNO example workflow")
 
 See the tests in `tests/fumagno_test.m` for examples of calls to these functions.
