@@ -40,7 +40,7 @@ This package solves to different problems, both in the Fully Magnetized Ions Lim
  2. The fluid-kinetic model for plasma expansion, using a kinetic approach to solve the cooling of electrons (K-FUMAGNO).
 
 These models are both contained in the same repository as they use mostly the same matlab functions.
-
+![Example workflow diagram](/docs/figs/logo.png "I-FUMAGNO example workflow")
 ### Fluid Model
 
 I-FUMAGNO is an improved version of the prior model FUMAGNO. It solves the problem by interpolation as follow:
