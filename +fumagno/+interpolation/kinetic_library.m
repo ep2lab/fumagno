@@ -13,8 +13,8 @@ Date: 20181028
 %----------------------------------------------------------------------
 %}
 
-function [solution] = kinetic_library (userdata)
+function [solution] = kinetic_library (userdata, path)
 
-[data,solution] = akiles2d.akiles2d(fullfile('fixtures/akiles2d_simrc.m'),userdata); 
+[data,solution] = akiles2d.akiles2d(fullfile(path),userdata); 
 
 end 
