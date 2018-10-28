@@ -24,7 +24,7 @@ function test_geometry_propagation(~)
 end
 
 
-function test_geometry_propagation(~)
+function test_solver(~)
     field = magnetic_field.loop_3d('RL',5,'I',1,'ZL',0,'axis',[0,0,1]);
     odeoptions.AbsTol = 1e-8;
     
