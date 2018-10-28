@@ -35,18 +35,27 @@ problem, please contact me through our
 
 ## Usage
 
-The basic workflow with FUMAGNO is as follows:
+This package solves to different problems, both in the Fully Magnetized Ions Limit (FMIL):
+ 1. The fluid equations in the plasma expansion, considering that electrons cool down isotropically (I-FUMAGNO).
+ 2. The fluid-kinetic model for plasma expansion, using a kinetic approach to solve the cooling of electrons (K-FUMAGNO).
+
+These models are both contained in the same repository as they use mostly the same matlab functions.
+
+### Fluid Model
+
+I-FUMAGNO is an improved version of the prior model FUMAGNO. It solves the problem by interpolation as follow:
 
 1. Create a magnetic_field object with the 3D field of the nozzle 
 to be studied. The object must be of a subclass of `magnetic_field.element_3d`
 2. Create the arrays with the points where the plasma properties will be
-calculated. This can be done in two ways: by generating `X0,Y0`, the points
-at the initial plane of the magnetic lines of interest, or by generating
-`X,Y,Z`. The functions `x0y0_direct`, `x0y0_to_plane` and `x0y0_inverse` are 
-used to compute the remaining arrays
+calculated. This can be done  by generating `X0,Y0`, the points
+at the initial plane of the magnetic lines of interest. The function `x0y0_direct`is used to compute the remaining arrays.
 3. Create the a `fluid_plasma` object and the initial condition functions
 for the potential, velocities and densities in the inital plane.
-4. Use `flow_solver` to compute the solution of the plasma properties
+4. Use `flow_solver` to compute the solution of the plasma properties. The solver contain the following:
+    4.1 A function that computes an interpolation library for a random vector of plasma densities
+    4.2 The interpolation of the solution for each magnetic line
+    4.3 The solution postprocessing, to impose the conditions at the throat
 5. Use the output as you see fit (save, plot, etc)
 
 ![Example workflow diagram](/docs/figs/fumagno-workflow.png "FUMAGNO example workflow")
