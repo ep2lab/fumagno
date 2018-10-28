@@ -52,7 +52,7 @@ calculated. This can be done  by generating `X0,Y0`, the points
 at the initial plane of the magnetic lines of interest. The function `x0y0_direct`is used to compute the remaining arrays.
 3. Create the a `fluid_plasma` object and the initial condition functions
 for the potential, velocities and densities in the inital plane.
-4. Use `flow_solver` to compute the solution of the plasma properties. The solver contains the following: 
+4. Use `flow_solver` to compute the solution of the plasma properties.
    *A function `library` that computes an interpolation library for a random vector of plasma densities 
    *A function `interpolation` that finds the solution for each magnetic line by interpolation 
    *The solution is postprocessed in order to impose the conditions at the throat 
