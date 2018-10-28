@@ -69,7 +69,7 @@ p.parse(varargin{:}); % check all, and assign defaults to p.Results as needed.
 % Place all input to the program in structure 'input' (to be given as last output)
 I = p.Results;
 
-[solution] = fumagno.interpolation.kinetic_library (userdata);
+[solution] = fumagno.interpolation.kinetic_library (userdata,path);
 
 [Kinetic_solution]  = fumagno.interpolation.kinetic_interp (solution, I);
 
