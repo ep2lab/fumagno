@@ -63,6 +63,28 @@ for the potential, velocities and densities in the inital plane.
 
 See the tests in `tests/fumagno_test.m` for examples of calls to these functions.
 
+### Fluid-kinetic Model
+
+K-FUMAGNO solves the expansion in the FMIL, retaining kinetic effects. Thia problem can be solved as follows:
+
+1. Create a magnetic_field object with the 3D field of the nozzle 
+to be studied. The object must be of a subclass of `magnetic_field.element_3d`
+2. Create the arrays with the points where the plasma properties will be
+calculated. This can be done  by generating `X0,Y0`, the points
+at the initial plane of the magnetic lines of interest. The function `x0y0_direct`is used to compute the remaining arrays.
+3. Create the a `fluid_plasma` object and the initial condition functions
+for the potential, velocities and densities in the inital plane.
+4. Use `flow_solver` to compute the solution of the plasma properties under isotropic assumptions
+5. Create an interpolation library solving `akiles` for a random vector of magnetic tube radius 
+6. Interpolate for each magnetic line, using the interpolation library in step 5
+5. Use the output as you see fit (save, plot, etc)
+
+
+![Example workflow diagram](/docs/figs/kfumagno-workflow.png "K-FUMAGNO example workflow")
+
+See the test in `tests/kinetic_solver_example.m` to see how to solve the kinetic problem.
+
+
 ## Contributing
 
 If you have any comments for improvement or 
