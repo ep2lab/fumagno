@@ -80,7 +80,7 @@ for the potential, velocities and densities in the inital plane.
 5. Use the output as you see fit (save, plot, etc)
 
 
-![Example workflow diagram](/docs/figs/kfumagno-workflow.png "K-FUMAGNO example workflow")
+![Example workflow diagram 2](/docs/figs/kfumagno-workflow.png "K-FUMAGNO example workflow")
 
 See the test in `tests/kinetic_solver_example.m` to see how to solve the kinetic problem.
 
