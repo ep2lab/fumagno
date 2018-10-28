@@ -52,10 +52,10 @@ calculated. This can be done  by generating `X0,Y0`, the points
 at the initial plane of the magnetic lines of interest. The function `x0y0_direct`is used to compute the remaining arrays.
 3. Create the a `fluid_plasma` object and the initial condition functions
 for the potential, velocities and densities in the inital plane.
-4. Use `flow_solver` to compute the solution of the plasma properties. The solver contain the following:
-    4.1 A function that computes an interpolation library for a random vector of plasma densities
-    4.2 The interpolation of the solution for each magnetic line
-    4.3 The solution postprocessing, to impose the conditions at the throat
+4. Use `flow_solver` to compute the solution of the plasma properties. The solver contains the following: 
+    4.1 A function `library` that computes an interpolation library for a random vector of plasma densities 
+    4.2 A function `interpolation` that finds the solution for each magnetic line by interpolation 
+    4.3 The solution is postprocessed in order to impose the conditions at the throat 
 5. Use the output as you see fit (save, plot, etc)
 
 ![Example workflow diagram](/docs/figs/fumagno-workflow.png "FUMAGNO example workflow")
