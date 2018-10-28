@@ -22,12 +22,11 @@ FUMAGNO depends on other Matlab packages that you can download from my GitHub
 account:
 [magnetic_field](https://github.com/ep2lab/magnetic_field),
 [fluid_plasma](https://github.com/ep2lab/fluid_plasma),
-[utilities](https://github.com/ep2lab/utilities)
-and
-[constants_and_units](https://github.com/ep2lab/constants_and_units).
-These packages must be installed and added to your Matlab path before
+[utilities](https://github.com/ep2lab/utilities),
+[constants_and_units](https://github.com/ep2lab/constants_and_units)
+and [akiles](https://github.com/ep2lab/akiles). These packages must be installed and added to your Matlab path before
 running FUMAGNO.
-[akiles](https://github.com/ep2lab/akiles)
+
 
 **Important comment**: I frequently update these repositories and some of the
 FUMAGNO dependencies in those packages may break. If you detect any such
