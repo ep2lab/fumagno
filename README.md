@@ -27,6 +27,7 @@ and
 [constants_and_units](https://github.com/ep2lab/constants_and_units).
 These packages must be installed and added to your Matlab path before
 running FUMAGNO.
+[akiles] (https://github.com/ep2lab/akiles)
 
 **Important comment**: I frequently update these repositories and some of the
 FUMAGNO dependencies in those packages may break. If you detect any such
