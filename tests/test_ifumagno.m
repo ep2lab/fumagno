@@ -27,6 +27,9 @@ end
 function test_solver(~)
     field = magnetic_field.loop_3d('RL',5,'I',1,'ZL',0,'axis',[0,0,1]);
     odeoptions.AbsTol = 1e-8;
+    electrons = fluid_plasma.species('label','e','m',0,'q',-1,'T0',1,'gamma',1.15);
+    ions = fluid_plasma.species('label','ions','m',1,'q',1,'gamma',1.15);
+    plasma = fluid_plasma.plasma('electrons',{electrons},'ions',ions);
     
     [O,I] = fumagno.propagate.x0y0_direct('field',field,'x0',[0.2 0.3; 0.1 0.4],'y0',[0.1 0.3; 0.2 0.4],'ds',0.5,'n_steps',[100 40],'odeoptions',odeoptions);                
     [Of,If] = fumagno.solve.flow_solver('plasma',plasma,'B',O.B,'B0',O.B0,'X0',O.X0,'Y0',O.Y0,'Nlib',[100000 1000]); 
