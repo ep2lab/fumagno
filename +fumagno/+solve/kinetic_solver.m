@@ -35,7 +35,7 @@ Judit Nuez
 Date: 20181020
 %----------------------------------------------------------------------
 %}
-function [Of,I] = flow_solver(varargin)
+function  [Kinetic_solution]  =kinetic_solver (userdata, path, varargin)
  
 %% Parse input
 p = inputParser; 
@@ -63,34 +63,17 @@ p.addParameter('ui0',@default_ui,@(x)isa(x,'function_handle'));
 p.addParameter('ne0',default_ncell,@iscell);
     default_ucell(1:n_electrons) = {@default_ui};
 p.addParameter('ue0',default_ucell,@iscell);
-p.addParameter('Nlib',[10000 10000],@isnumeric);
 
 p.parse(varargin{:}); % check all, and assign defaults to p.Results as needed.
  
 % Place all input to the program in structure 'input' (to be given as last output)
 I = p.Results;
 
-% Clear unneeded variables
-clear p default_ncell default_ucell
+[solution] = fumagno.interpolation.kinetic_library (userdata,path);
 
-% Interpolation Library
-[LIB]  = fumagno.interpolation.fluid_library (I);
+[Kinetic_solution]  = fumagno.interpolation.kinetic_interp (solution, I);
 
-% Interpolation
-[OI]   = fumagno.interpolation.fluid_interp (LIB,I); 
-
-% Postprocessing
-        x = I.phi0-OI.PHI(1,:,1);
-        Of.PHI = OI.PHI+x;
-        Of.NI  = OI.NI.*I.ni0(I.X0,I.Y0);
-        Of.UI  = OI.UI.*I.ui0(I.X0,I.Y0);
-        Of.NE  = Of.NI; %QN
-        Of.UE  = OI.UE.*I.ui0(I.X0,I.Y0);
-        Of.HE  = OI.HE; Of.GE  = OI.GE; 
-        Of.HI  = OI.HI; Of.GI  = OI.GI;
-       
-        
-        display ('I-FUMAGNO Completed')
+        display ('K-FUMAGNO Completed')
 end
 
 
