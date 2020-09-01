@@ -17,10 +17,8 @@ INPUT: (can be name:value pairs or a structure)
 
 OUTPUT:
 * O: structure containing the following output fields:
-    - X0,Y0,BX0,BY0,BZ0,B0: arrays for the corresponding x0,y0
-      coordinates for each magnetic streamline at the initial plane, and
-      the corresponding magnetic field there
-    - X,Y,Z,BX,BY,BZ,B: position and magnetic field arrays
+    - X0,Y0: arrays for the corresponding x0,y0
+      coordinates for each magnetic streamline at the initial plane.
 * I: structure containing all effective inputs, after adding any
   defaults to missing variables. 
 
@@ -49,34 +47,23 @@ I = p.Results;
 
 % Clear temporary variables
 clear p  
- 
-%% Compute trivial output components
-O.X = I.X;
-O.Y = I.Y;
-O.Z = I.Z;
-[O.BX,O.BY,O.BZ] = I.field.field_3d(O.X,O.Y,O.Z);
-O.B = sqrt(O.BX.^2+O.BY.^2+O.BZ.^2);
-
+  
 %% Find X0, Y0 by streamline propagation and intersection with z = 0
 I.odeoptions.Events = @odeevents; % Add the events function to odepotions
 I.odeoptions.MaxStep = 1; 
 O.X0 = I.X.*0; % Allocate
 O.Y0 = I.X.*0;
 for i = 1:numel(I.X)
-    if O.Z(i) == 0 % the point given is already at the initial plane
+    if I.Z(i) == 0 % the point given is already at the initial plane
         O.X0(i) = I.X(i);
         O.Y0(i) = I.Y(i);
     else
-        sol = ode45(@(t,PositionVector)propagateB(I.field,I.direction,PositionVector),[0,I.maxlength],[O.X(i);O.Y(i);O.Z(i)],I.odeoptions);
+        sol = ode45(@(t,PositionVector)propagateB(I.field,I.direction,PositionVector),[0,I.maxlength],[I.X(i);I.Y(i);I.Z(i)],I.odeoptions);
         O.X0(i) = sol.ye(1);
         O.Y0(i) = sol.ye(2);
     end
 end    
 
-%% Compute BX0, BY0, BZ0, B0 at X0, Y0
-[O.BX0,O.BY0,O.BZ0] = I.field.field_3d(O.X0,O.Y0,O.X0.*0);
-O.B0 = sqrt(O.BX0.^2+O.BY0.^2+O.BZ0.^2);
- 
 end % end main function
 
 %----------------------------------------------------------------------

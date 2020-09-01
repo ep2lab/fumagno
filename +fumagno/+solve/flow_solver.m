@@ -7,8 +7,7 @@ INPUT: (can be name:value pairs or a structure)
 * B,B0: arrays with magnetic field at each input point (B), and the
   corresponding initial condition point (B0)
 * X0,Y0: arrays with corresponding initial conditions. This and the
-  previous input can be obtained one from the other with x0y0_direct or
-  x0y0_inverse 
+  previous input can be obtained one from the other with x0y0_direct 
 * plasma: a fluid_plasma.plasma object, describing the different species
   in the quasineutral plasma.  
 * phi0: function handle of x0,y0 for the electric potential
@@ -148,9 +147,9 @@ function n = default_n(x0,y0)
     n(x0.^2+y0.^2>1)=0;
 end
 function u = default_ui(x0,y0)
-% Default velocity in case no input is provided. Use u = 1 in the circle with 
+% Default velocity in case no input is provided. Use u = 3 in the circle with 
 % R = 1
-    u = x0.*0 + 1;
+    u = x0.*0 + 3;
     u(x0.^2+y0.^2>1) = 0;
 end 
 function err = quasineutrality(phi,ui,ue,plasma,B,Hi,Gi,He,Ge)

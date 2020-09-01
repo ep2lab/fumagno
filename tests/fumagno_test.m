@@ -58,16 +58,18 @@ end
 function test_flow_solver(t)    
     % set up required fixture data
     field = magnetic_field.loop_3d('axis',[0,0,1]);
-    plasma = fluid_plasma.plasma; 
+    electrons = fluid_plasma.species('label','electrons',...
+                                     'm',0,...
+                                     'q',-1,...
+                                     'n0',1,...
+                                     'T0',1,...
+                                     'gamma',1.3);
+    plasma = fluid_plasma.plasma('electrons',{electrons}); 
     
     odeoptions = odeset;
-    odeoptions.AbsTol = 1e-8;
-    [O,I] = fumagno.propagate.x0y0_inverse('field',field,'x',rand(3,4),'y',rand(3,4),'z',rand(3,4)+2,'odeoptions',odeoptions); % array call
-    
-    [Of,If] = fumagno.solve.flow_solver; % default call
-    [Of,If] = fumagno.solve.flow_solver('plasma',plasma,'B',O.B,'B0',O.B0,'X0',O.X0,'Y0',O.Y0); % a more complete call, but using default initial conditions
-    
+    odeoptions.AbsTol = 1e-8; 
     [O,I] = fumagno.propagate.x0y0_direct('field',field,'x0',rand(3,4)*0.2,'y0',rand(3,4)*0.2,'ds',0.1,'n_steps',13,'odeoptions',odeoptions); % full call
-    [Of,If] = fumagno.solve.flow_solver('plasma',plasma,'B',O.B,'B0',O.B0,'X0',O.X0,'Y0',O.Y0); % a more complete call, but using default initial conditions
+    
+    [Of,If] = fumagno.solve.flow_solver('plasma',plasma,'B',O.B,'B0',O.B0,'X0',O.X0,'Y0',O.Y0); % a quite complete call, but using default initial conditions
     [Of,If] = fumagno.solve.flow_solver('plasma',plasma,'B',0.1,'B0',1,'X0',1,'Y0',1); % a point that is outside the default initial condition
 end 
