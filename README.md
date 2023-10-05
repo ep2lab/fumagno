@@ -3,8 +3,12 @@ FUMAGNO
 
 [![DOI](https://zenodo.org/badge/86265405.svg)](https://zenodo.org/badge/latestdoi/86265405)
 
-Matlab code that implements a 3D fully magnetized magnetic nozzle model.
-You can find all the details of the model in [TBD].
+Matlab code that implements a 3D fully magnetized magnetic nozzle model. The code allows to simulate the properties of the expanding plasma in a prescribed magnetic field, under the assumption of full magnetization, quasineutrality, and no collisions.
+Plasma potential, density velocity profiles can be simulated from the provided boundary condition upstream.
+
+The code was developed at UC3M as part of the activities of the [EP2 research group](https://ep2.uc3m.es/), by [Mario Merino](https://mariomerino.uc3m.es/), with funding from the Spanish R&D National Plan (grant number ESP2016-75887-P).
+
+You can find all the details of the model in *Mario Merino and Eduardo Ahedo, "Contactless steering of a plasma jet with a 3D magnetic nozzle", Plasma Sources Science and Technology 26, 095001 (2017)*.
 
 ## Installation
 
@@ -18,7 +22,7 @@ your Matlab path.
 A recent version of Matlab is needed to run the code. 
 FUMAGNO has been developed in Matlab 2016a Academic version. 
 
-FUMAGNO depends on other Matlab packages that you can download from my GitHub
+FUMAGNO depends on other of our Matlab packages that you can download below:
 account:
 [magnetic_field](https://github.com/ep2lab/magnetic_field),
 [fluid_plasma](https://github.com/ep2lab/fluid_plasma),
@@ -26,12 +30,7 @@ account:
 and
 [constants_and_units](https://github.com/ep2lab/constants_and_units).
 These packages must be installed and added to your Matlab path before
-running FUMAGNO.
-
-**Important comment**: I frequently update these repositories and some of the
-FUMAGNO dependencies in those packages may break. If you detect any such
-problem, please contact me through our 
-[website](http://ep2lab.uc3m.es/).
+running FUMAGNO. 
 
 ## Usage
 
